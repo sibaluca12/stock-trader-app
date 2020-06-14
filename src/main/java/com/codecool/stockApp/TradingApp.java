@@ -1,5 +1,7 @@
 package com.codecool.stockApp;
 
+import sun.rmi.runtime.Log;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -18,6 +20,7 @@ public class TradingApp {
 		String symbol = keyboard.nextLine();
 		System.out.println("Enter the maximum price you are willing to pay: ");
 		double price;
+		Logger logger = new Logger();
 		try {
 			price = keyboard.nextDouble();
 		} catch (InputMismatchException e) {
@@ -26,15 +29,24 @@ public class TradingApp {
 		}
 
 		try {
-			boolean purchased = Trader.getInstance().buy(symbol, price);
+			Trader trader = new Trader();
+			trader.setBid(price);
+			trader.setSymbol(symbol);
+			boolean purchased = trader.buy();
+
 			if (purchased) {
-				Logger.getInstance().log("Purchased stock!");
+//				Logger.getInstance().log();
+				logger.setMessage("Purchased stock!");
 			}
 			else {
-				Logger.getInstance().log("Couldn't buy the stock at that price.");
+//				Logger.getInstance().log();
+				logger.setMessage("Couldn't buy the stock at that price.");
 			}
 		} catch (Exception e) {
-			Logger.getInstance().log("There was an error while attempting to buy the stock: " + e.getMessage());
+//			Logger.getInstance().log();
+			logger.setMessage("There was an error while attempting to buy the stock: " + e.getMessage());
+
 		}
+		logger.log();
 	}
 }

@@ -10,18 +10,28 @@ import java.util.Date;
 public class Logger {
 
     private static Logger instance;
+    private String message = null;
 
-    public static Logger getInstance() {
-        if (instance == null) {
-            instance = new Logger();
-        }
-        return instance;
+
+//    public static Logger getInstance() {
+//        if (instance == null) {
+//            instance = new Logger();
+//        }
+//        return instance;
+//    }
+
+//    public Logger(String message){
+//        this.message = message;
+//    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public void log(String message) {
+    public void log() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        String msg = dateFormat.format(date) + " " + message;
+        String msg = dateFormat.format(date) + " " + this.message;
         System.out.println(msg);
         try {
             FileWriter fileWriter = new FileWriter("log.txt",true);

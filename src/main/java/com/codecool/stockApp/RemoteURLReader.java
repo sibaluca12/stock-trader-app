@@ -9,9 +9,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
 public class RemoteURLReader {
+    private String endpoint = null;
 
-    public static String readFromUrl(String endpoint) throws IOException {
-        URL url = new URL(endpoint);
+//    public RemoteURLReader(String endpoint){
+//        this.endpoint = endpoint;
+//    }
+
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
+    }
+
+    public String readFromUrl() throws IOException {
+        URL url = new URL(this.endpoint);
         URLConnection conn = url.openConnection();
         BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
         String lines = reader.lines().collect(Collectors.joining("\n"));
